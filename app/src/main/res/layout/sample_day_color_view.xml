@@ -5,10 +5,11 @@
 
     <com.example.b3tempoapp2425.DayColorView
         style="@style/Widget.Theme.B3TempoApp2425.DayColorView"
-        android:layout_width="300dp"
+        android:layout_width="200dp"
         android:layout_height="300dp"
-        android:paddingLeft="20dp"
-        android:paddingBottom="40dp"
-        app:captionText="empty" />
+        app:dayCircleColor="@color/tempo_red_day_bg"
+        app:captionTextSize="30sp"
+        app:captionTextColor="@color/light_blue_400"
+        app:captionText="Demo CS" />
 
 </FrameLayout>
