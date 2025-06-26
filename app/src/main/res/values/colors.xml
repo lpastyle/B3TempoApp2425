@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="tempo_blue_day_bg">#0595DE</color>
+    <color name="tempo_white_day_bg">#ffffff</color>
+    <color name="tempo_red_day_bg">#FF1F00</color>
+
 </resources>

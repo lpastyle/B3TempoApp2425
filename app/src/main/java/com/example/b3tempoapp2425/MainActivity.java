@@ -46,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
             Log.e(LOG_TAG, "Unable to initialize Retrofit client");
             finish();
         }
-
-        updateNbTempoDaysLeft();
-        updateTempoHistory();
     }
     /*
      *  ----------------------- Helper Methods -------------------------
@@ -126,5 +123,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateNbTempoDaysLeft();
+        updateTempoHistory();
+    }
 }
