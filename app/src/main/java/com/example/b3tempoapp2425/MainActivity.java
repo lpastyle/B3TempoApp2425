@@ -143,6 +143,13 @@ public class MainActivity extends AppCompatActivity {
             for(TempoDate date : tempoCalendar) {
                 Log.d(LOG_TAG, date.dateApplication + " = " + date.statut);
             }
+            // update custom views
+            int historySize = tempoCalendar.size();
+            if (historySize > 1) {
+                binding.todayDcv.setDayCircleColor(tempoCalendar.get(historySize - 2).statut);
+                binding.tomorrowDcv.setDayCircleColor(tempoCalendar.get(historySize - 1).statut);
+            }
+
         }
     }
 

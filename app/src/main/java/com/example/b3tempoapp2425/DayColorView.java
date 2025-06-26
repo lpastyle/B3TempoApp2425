@@ -40,6 +40,7 @@ public class DayColorView extends View {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyle) {
+        this.context=context;
         // Load attributes
         try (TypedArray a = getContext().obtainStyledAttributes( // object in try-with-resource must implement AutoCloseable (RAII pattern)
                 attrs,

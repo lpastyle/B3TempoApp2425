@@ -7,12 +7,38 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <com.example.b3tempoapp2425.DayColorView
+        android:id="@+id/today_dcv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/tomorrow_dcv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.example.b3tempoapp2425.DayColorView
+        android:id="@+id/tomorrow_dcv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/today_dcv" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
-        android:layout_height="0dp"
         android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8"  />
+        app:layout_constraintGuide_percent="0.8" />
 
     <TextView
         android:id="@+id/blue_days_tv"
@@ -24,8 +50,8 @@
         android:layout_marginBottom="8dp"
         android:background="@color/tempo_blue_day_bg"
         android:gravity="center"
-        android:textColor="@color/black"
         android:text="@string/not_available"
+        android:textColor="@color/black"
         android:textSize="@dimen/tempo_days_left_text_size"
         app:layout_constraintBottom_toTopOf="@+id/history_bt"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,8 +85,8 @@
         android:layout_marginBottom="8dp"
         android:background="@color/tempo_red_day_bg"
         android:gravity="center"
-        android:textColor="@color/black"
         android:text="@string/not_available"
+        android:textColor="@color/black"
 
         android:textSize="@dimen/tempo_days_left_text_size"
         app:layout_constraintBottom_toTopOf="@+id/history_bt"
@@ -75,8 +101,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:textSize="@dimen/history_button_text_size"
         android:text="@string/history_bt"
+        android:textSize="@dimen/history_button_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
