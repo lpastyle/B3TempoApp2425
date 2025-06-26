@@ -4,13 +4,16 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 public class DayColorView extends View {
+    private static final float CIRCLE_SCALE = 0.9f; // circle will occupy 90% of room's view
     // Custom attributes data model
     private String captionText;
     private int captionColor = Color.BLACK;
@@ -18,9 +21,8 @@ public class DayColorView extends View {
     private int dayCircleColor = Color.GRAY;
     private Context context;
 
-    private TextPaint mTextPaint;
-    private float mTextWidth;
-    private float mTextHeight;
+    private TextPaint textPaint;
+    private Paint circlePaint;
 
     public DayColorView(Context context) {
         super(context);
@@ -53,13 +55,32 @@ public class DayColorView extends View {
             dayCircleColor = a.getColor(R.styleable.DayColorView_dayCircleColor, ContextCompat.getColor(context, R.color.tempo_undecided_day_bg));
         }
 
+        // Set up a default TextPaint object
+        textPaint = new TextPaint();
+        setTextPaintAndMeasurements();
+
+        // set up a default paint object
+        circlePaint = new Paint();
+        setCirclePaint();
 
     }
 
+    private void setTextPaintAndMeasurements() {
+        // set up a default TextPaint object
+        textPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setTextAlign(Paint.Align.CENTER);
+        textPaint.setTextSize(captionTextSize);
+        textPaint.setColor(captionColor);
+    }
 
+    private void setCirclePaint() {
+        // set up a paint object to draw circle
+        circlePaint.setStyle(Paint.Style.FILL);
+        circlePaint.setColor(dayCircleColor);
+    }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
 
         // allocations per draw cycle.
@@ -71,6 +92,19 @@ public class DayColorView extends View {
         int contentWidth = getWidth() - paddingLeft - paddingRight;
         int contentHeight = getHeight() - paddingTop - paddingBottom;
 
+        // Draw circle
+        float radius = Math.min(contentHeight, contentWidth) * 0.5f * CIRCLE_SCALE;
+        canvas.drawCircle(
+                paddingLeft + contentWidth * 0.5f,
+                paddingTop + contentHeight * 0.5f,
+                radius,
+                circlePaint);
+
+        // Draw the text.
+        canvas.drawText(captionText,
+                paddingLeft + contentWidth  * 0.5f,
+                paddingTop + contentHeight  * 0.5f,
+                textPaint);
     }
 }
 

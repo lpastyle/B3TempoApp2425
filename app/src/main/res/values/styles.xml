@@ -2,6 +2,7 @@
 
     <style name="Widget.Theme.B3TempoApp2425.DayColorView" parent="">
         <item name="android:background">@color/gray_400</item>
-        <item name="exampleColor">@color/light_blue_400</item>
+        <item name="dayCircleColor">@color/tempo_undecided_day_bg</item>
+        <item name="captionTextColor">@color/light_blue_400</item>
     </style>
 </resources>
