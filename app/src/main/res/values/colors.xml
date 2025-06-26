@@ -3,9 +3,16 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!-- TEMPO days colors -->
     <color name="tempo_blue_day_bg">#0595DE</color>
     <color name="tempo_white_day_bg">#ffffff</color>
     <color name="tempo_red_day_bg">#FF1F00</color>
     <color name="tempo_undecided_day_bg">#777777</color>
+
+    <!-- Added by AS custom view template -->
+    <color name="light_blue_400">#FF29B6F6</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="gray_400">#FFBDBDBD</color>
+    <color name="gray_600">#FF757575</color>
 
 </resources>
