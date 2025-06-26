@@ -10,10 +10,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.b3tempoapp2425.model.TempoDate;
 import com.example.b3tempoapp2425.model.TempoDaysLeft;
 import com.example.b3tempoapp2425.model.TempoHistory;
 
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,6 +25,9 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private IEdfApi edfApi;
+    ArrayList<TempoDate> tempoCalendar = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +93,13 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<TempoHistory>() {
             @Override
             public void onResponse(@NonNull Call<TempoHistory> call, @NonNull Response<TempoHistory> response) {
-                Log.i(LOG_TAG,"Call to getTempoHistory() succeeded");
+                tempoCalendar.clear();
+                if (response.code() == HttpURLConnection.HTTP_OK && response.body() != null) {
+                    Log.d(LOG_TAG,"Got tempo history for " + response.body().content.options.size() + " option(s)");
+                    setTempoCalendar(response.body());
+                } else {
+                    Log.e(LOG_TAG,"Call to getTempoHistory() returned error code " + response.code());
+                }
             }
 
             @Override
@@ -97,6 +108,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    void setTempoCalendar(TempoHistory tempoHistory) {
+        for(TempoHistory.Option item : tempoHistory.content.options) {
+            if (item.option.equals(IEdfApi.API_OPTION_PARAM_VALUE)) {
+                tempoCalendar.addAll(item.calendrier);
+                break;
+            }
+        }
+        if (tempoCalendar.isEmpty()) {
+            Log.w(LOG_TAG,"No data found for option "+ IEdfApi.API_OPTION_PARAM_VALUE);
+        } else {
+            for(TempoDate date : tempoCalendar) {
+                Log.d(LOG_TAG, date.dateApplication + " = " + date.statut);
+            }
+        }
     }
 
 
