@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -12,6 +13,8 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.b3tempoapp2425.model.TempoDaysLeft;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,8 +47,20 @@ public class MainActivity extends AppCompatActivity {
     void updateNbTempoDaysLeft() {
         Call<TempoDaysLeft> call = edfApi.getTempoDaysLeft(
                 IEdfApi.API_OPTION_PARAM_VALUE,
+                "2025-06-26"
+        );
 
-        )
+        call.enqueue(new Callback<TempoDaysLeft>() {
+            @Override
+            public void onResponse(@NonNull Call<TempoDaysLeft> call, @NonNull Response<TempoDaysLeft> response) {
+                Log.i(LOG_TAG, "call to getTempoDaysLeft() succeeded ");
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<TempoDaysLeft> call, @NonNull Throwable t) {
+                Log.e(LOG_TAG, "call to getTempoDaysLeft() failed ");
+            }
+        });
     }
 
 
