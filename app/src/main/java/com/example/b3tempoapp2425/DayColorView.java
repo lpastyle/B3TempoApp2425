@@ -8,6 +8,8 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
+
 public class DayColorView extends View {
     // Custom attributes data model
     private String captionText;
@@ -37,11 +39,19 @@ public class DayColorView extends View {
 
     private void init(Context context, AttributeSet attrs, int defStyle) {
         // Load attributes
-        TypedArray a = getContext().obtainStyledAttributes( // object in try-with-resource must implement AutoCloseable (RAII pattern)
+        try (TypedArray a = getContext().obtainStyledAttributes( // object in try-with-resource must implement AutoCloseable (RAII pattern)
                 attrs,
                 R.styleable.DayColorView,
                 defStyle,
-                0);
+                0)) {
+            captionText = a.getString(R.styleable.DayColorView_captionText);
+            if (captionText == null) {
+                captionText = context.getString(R.string.not_set);
+            }
+            captionColor = a.getColor(R.styleable.DayColorView_captionTextColor, captionColor);
+            captionTextSize = a.getDimension(R.styleable.DayColorView_captionTextSize, getResources().getDimension(R.dimen.tempo_color_view_text_size));
+            dayCircleColor = a.getColor(R.styleable.DayColorView_dayCircleColor, ContextCompat.getColor(context, R.color.tempo_undecided_day_bg));
+        }
 
 
     }

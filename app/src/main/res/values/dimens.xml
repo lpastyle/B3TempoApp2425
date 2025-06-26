@@ -2,4 +2,5 @@
 <resources>
     <dimen name="tempo_days_left_text_size">24sp</dimen>
     <dimen name="history_button_text_size">20sp</dimen>
+    <dimen name="tempo_color_view_text_size">28sp</dimen>
 </resources>
