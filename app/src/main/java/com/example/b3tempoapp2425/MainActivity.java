@@ -13,6 +13,8 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.b3tempoapp2425.model.TempoDaysLeft;
 import com.example.b3tempoapp2425.model.TempoHistory;
 
+import java.net.HttpURLConnection;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,7 +58,16 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<TempoDaysLeft>() {
             @Override
             public void onResponse(@NonNull Call<TempoDaysLeft> call, @NonNull Response<TempoDaysLeft> response) {
-                Log.i(LOG_TAG, "call to getTempoDaysLeft() succeeded ");
+                TempoDaysLeft tempoDaysLeft = response.body();
+                if (response.code() == HttpURLConnection.HTTP_OK && tempoDaysLeft != null) {
+                    for (int i = 0; i < tempoDaysLeft.content.size(); i++) {
+                        Log.d(LOG_TAG, "typeJourEff[" + i + "] = " + tempoDaysLeft.content.get(i).typeJourEff);
+                        Log.d(LOG_TAG, "nombreJours[" + i + "] = " + tempoDaysLeft.content.get(i).nombreJours);
+                        Log.d(LOG_TAG, "nombreJoursTirés[" + i + "] = " + tempoDaysLeft.content.get(i).nombreJoursTires);
+                    }
+                } else {
+                    Log.w(LOG_TAG, "call to getTempoDaysLeft() failed with error code " + response.code());
+                }
             }
 
             @Override
@@ -77,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<TempoHistory>() {
             @Override
             public void onResponse(@NonNull Call<TempoHistory> call, @NonNull Response<TempoHistory> response) {
-                Log.e(LOG_TAG,"Call to getTempoHistory() succeeded");
+                Log.i(LOG_TAG,"Call to getTempoHistory() succeeded");
             }
 
             @Override
