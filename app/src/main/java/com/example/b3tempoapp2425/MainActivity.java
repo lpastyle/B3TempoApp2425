@@ -1,6 +1,7 @@
 package com.example.b3tempoapp2425;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,8 +9,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+import retrofit2.Retrofit;
 
+public class MainActivity extends AppCompatActivity {
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private IEdfApi edfApi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,5 +24,14 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Retrofit retrofitClient = ApiClient.get();
+        if (retrofitClient != null) {
+            edfApi = retrofitClient.create(IEdfApi.class);
+        } else {
+            Log.e(LOG_TAG, "Unable to initialize Retrofit client");
+            finish();
+        }
+
     }
 }
