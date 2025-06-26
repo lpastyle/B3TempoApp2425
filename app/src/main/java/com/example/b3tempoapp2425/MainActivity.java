@@ -1,5 +1,9 @@
 package com.example.b3tempoapp2425;
 
+import static com.example.b3tempoapp2425.TempoColor.BLUE;
+import static com.example.b3tempoapp2425.TempoColor.RED;
+import static com.example.b3tempoapp2425.TempoColor.WHITE;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,11 +92,11 @@ public class MainActivity extends AppCompatActivity {
     void setTempoDaysLeft(List<TempoDaysLeft.Content> contents) {
         for(TempoDaysLeft.Content item : contents) {
             switch (item.typeJourEff) {
-                case "TEMPO_ROUGE" : binding.redDaysTv.setText(Tools.getDaysLeftFromContent(item));
+                case RED : binding.redDaysTv.setText(Tools.getDaysLeftFromContent(item));
                     break;
-                case "TEMPO_BLANC" : binding.whiteDaysTv.setText(Tools.getDaysLeftFromContent(item));
+                case WHITE : binding.whiteDaysTv.setText(Tools.getDaysLeftFromContent(item));
                     break;
-                case "TEMPO_BLEU" : binding.blueDaysTv.setText(Tools.getDaysLeftFromContent(item));
+                case BLUE : binding.blueDaysTv.setText(Tools.getDaysLeftFromContent(item));
                     break;
             }
         }
