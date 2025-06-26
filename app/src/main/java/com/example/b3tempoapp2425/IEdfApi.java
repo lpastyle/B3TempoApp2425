@@ -10,12 +10,19 @@ public interface IEdfApi {
     String API_OPTION_PARAM_VALUE = "TEMPO";
     String API_CONSUMER_ID_PARAM_VALUE = "src";
 
-    // https://api-commerce.edf.fr/commerce/activet/v1/calendrier-jours-effacement?option=TEMPO&dateApplicationBorneInf=2024-6-27&dateApplicationBorneSup=2025-6-27&identifiantConsommateur=src
-    @GET("commerce/activet/v1/calendrier-jours-effacement")
+    // https://api-commerce.edf.fr/commerce/activet/v1/saisons/search?option=TEMPO&dateReference=2025-06-26
+    @GET("commerce/activet/v1/saisons/search")
     Call<TempoDaysLeft> getTempoDaysLeft(
+            @Query("option") String option,
+            @Query("dateReference") String dateReference
+    );
+
+    // https://api-commerce.edf.fr/commerce/activet/v1/calendrier-jours-effacement?option=TEMPO&dateApplicationBorneInf=2024-6-27&dateApplicationBorneSup=2025-6-27&identifiantConsommateur=src
+   /* @GET("commerce/activet/v1/calendrier-jours-effacement")
+    Call<TempoHistory> getTempoHistory(
             @Query("option") String option,
             @Query("dateApplicationBorneInf") String dateInf,
             @Query("dateApplicationBorneSup") String dateSup,
             @Query("identifiantConsommateur") String consumerId
-    );
+    ); */
 }

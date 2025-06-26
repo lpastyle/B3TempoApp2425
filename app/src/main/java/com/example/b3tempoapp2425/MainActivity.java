@@ -9,6 +9,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.b3tempoapp2425.model.TempoDaysLeft;
+
+import retrofit2.Call;
 import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,4 +37,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    /*
+     *  ----------------------- Helper Methods -------------------------
+     */
+
+    void updateNbTempoDaysLeft() {
+        Call<TempoDaysLeft> call = edfApi.getTempoDaysLeft(
+                IEdfApi.API_OPTION_PARAM_VALUE,
+
+        )
+    }
+
+
 }
