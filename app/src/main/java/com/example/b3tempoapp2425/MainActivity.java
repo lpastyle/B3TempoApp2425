@@ -2,6 +2,7 @@ package com.example.b3tempoapp2425;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -10,12 +11,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.b3tempoapp2425.databinding.ActivityMainBinding;
 import com.example.b3tempoapp2425.model.TempoDate;
 import com.example.b3tempoapp2425.model.TempoDaysLeft;
 import com.example.b3tempoapp2425.model.TempoHistory;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,6 +27,7 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private ActivityMainBinding binding;
     private IEdfApi edfApi;
     ArrayList<TempoDate> tempoCalendar = new ArrayList<>();
 
@@ -31,9 +35,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        setContentView(binding.getRoot());
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main, (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -77,6 +82,19 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(LOG_TAG, "call to getTempoDaysLeft() failed ");
             }
         });
+    }
+
+    void setTempoDaysLeft(List<TempoDaysLeft.Content> contents) {
+        for(TempoDaysLeft.Content item : contents) {
+            switch (item.typeJourEff) {
+                case "TEMPO_ROUGE" : binding.redDaysTv.setText(Tools.getDaysLeftFromContent(item));
+                    break;
+                case "TEMPO_BLANC" :
+                    break;
+                case "TEMPO_BLEU" :
+                    break;
+            }
+        }
     }
 
     void updateTempoHistory() {
