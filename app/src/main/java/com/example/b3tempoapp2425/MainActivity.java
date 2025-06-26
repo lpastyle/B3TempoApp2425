@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.b3tempoapp2425.model.TempoDaysLeft;
+import com.example.b3tempoapp2425.model.TempoHistory;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         updateNbTempoDaysLeft();
-
+        updateTempoHistory();
     }
     /*
      *  ----------------------- Helper Methods -------------------------
@@ -63,6 +64,28 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(LOG_TAG, "call to getTempoDaysLeft() failed ");
             }
         });
+    }
+
+    void updateTempoHistory() {
+        // Create call to getTempoHistory
+        Call<TempoHistory> call = edfApi.getTempoHistory(
+                IEdfApi.API_OPTION_PARAM_VALUE,
+                "2024-06-27",
+                "2025-06-27",
+                IEdfApi.API_CONSUMER_ID_PARAM_VALUE);
+
+        call.enqueue(new Callback<TempoHistory>() {
+            @Override
+            public void onResponse(@NonNull Call<TempoHistory> call, @NonNull Response<TempoHistory> response) {
+                Log.e(LOG_TAG,"Call to getTempoHistory() succeeded");
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<TempoHistory> call, @NonNull Throwable t) {
+                Log.e(LOG_TAG,"Call to getTempoHistory() failed");
+            }
+        });
+
     }
 
 
