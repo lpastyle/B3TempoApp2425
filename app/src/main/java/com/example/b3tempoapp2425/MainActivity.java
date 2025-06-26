@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(LOG_TAG, "typeJourEff[" + i + "] = " + tempoDaysLeft.content.get(i).typeJourEff);
                         Log.d(LOG_TAG, "nombreJours[" + i + "] = " + tempoDaysLeft.content.get(i).nombreJours);
                         Log.d(LOG_TAG, "nombreJoursTirés[" + i + "] = " + tempoDaysLeft.content.get(i).nombreJoursTires);
+                        setTempoDaysLeft(tempoDaysLeft.content);
                     }
                 } else {
                     Log.w(LOG_TAG, "call to getTempoDaysLeft() failed with error code " + response.code());
@@ -89,9 +90,9 @@ public class MainActivity extends AppCompatActivity {
             switch (item.typeJourEff) {
                 case "TEMPO_ROUGE" : binding.redDaysTv.setText(Tools.getDaysLeftFromContent(item));
                     break;
-                case "TEMPO_BLANC" :
+                case "TEMPO_BLANC" : binding.whiteDaysTv.setText(Tools.getDaysLeftFromContent(item));
                     break;
-                case "TEMPO_BLEU" :
+                case "TEMPO_BLEU" : binding.blueDaysTv.setText(Tools.getDaysLeftFromContent(item));
                     break;
             }
         }

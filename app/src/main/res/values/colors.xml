@@ -6,5 +6,6 @@
     <color name="tempo_blue_day_bg">#0595DE</color>
     <color name="tempo_white_day_bg">#ffffff</color>
     <color name="tempo_red_day_bg">#FF1F00</color>
+    <color name="tempo_undecided_day_bg">#777777</color>
 
 </resources>
