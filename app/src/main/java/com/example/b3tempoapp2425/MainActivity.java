@@ -1,5 +1,7 @@
 package com.example.b3tempoapp2425;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.example.b3tempoapp2425.TempoColor.BLUE;
 import static com.example.b3tempoapp2425.TempoColor.RED;
 import static com.example.b3tempoapp2425.TempoColor.WHITE;
@@ -38,7 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ActivityMainBinding binding;
     private IEdfApi edfApi;
     ArrayList<TempoDate> tempoCalendar = new ArrayList<>();
-
+    // Number of running progress wheels
+    private int nbRunningWheels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Tools.getNowDate()
         );
 
+        showProgressWheel();
         call.enqueue(new Callback<TempoDaysLeft>() {
             @Override
             public void onResponse(@NonNull Call<TempoDaysLeft> call, @NonNull Response<TempoDaysLeft> response) {
@@ -87,11 +91,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     Log.w(LOG_TAG, "call to getTempoDaysLeft() failed with error code " + response.code());
                 }
+                hideProgressWheel();
             }
 
             @Override
             public void onFailure(@NonNull Call<TempoDaysLeft> call, @NonNull Throwable t) {
                 Log.e(LOG_TAG, "call to getTempoDaysLeft() failed ");
+                hideProgressWheel();
             }
         });
     }
@@ -117,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Tools.getTomorrowDate(),
                 IEdfApi.API_CONSUMER_ID_PARAM_VALUE);
 
+        showProgressWheel();
         call.enqueue(new Callback<TempoHistory>() {
             @Override
             public void onResponse(@NonNull Call<TempoHistory> call, @NonNull Response<TempoHistory> response) {
@@ -127,11 +134,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     Log.e(LOG_TAG,"Call to getTempoHistory() returned error code " + response.code());
                 }
+                hideProgressWheel();
             }
 
             @Override
             public void onFailure(@NonNull Call<TempoHistory> call, @NonNull Throwable t) {
                 Log.e(LOG_TAG,"Call to getTempoHistory() failed");
+                hideProgressWheel();
             }
         });
 
@@ -185,4 +194,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.setClass(this,HistoryActivity.class);
         startActivity(intent);
     } */
+
+    void showProgressWheel(){
+        nbRunningWheels++;
+        binding.progressWheelPb.setVisibility(VISIBLE);
+    }
+
+    void hideProgressWheel() {
+        nbRunningWheels--;
+        if (nbRunningWheels < 1) binding.progressWheelPb.setVisibility(GONE);
+    }
 }
