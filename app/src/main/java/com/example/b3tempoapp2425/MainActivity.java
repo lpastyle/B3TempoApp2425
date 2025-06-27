@@ -31,7 +31,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private ActivityMainBinding binding;
     private IEdfApi edfApi;
@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Init views
+        binding.historyBt.setOnClickListener(this);
 
         Retrofit retrofitClient = ApiClient.get();
         if (retrofitClient != null) {
@@ -160,6 +163,17 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         updateNbTempoDaysLeft();
         updateTempoHistory();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.history_bt) {
+            Intent intent = new Intent();
+            intent.setClass(this, HistoryActivity.class);
+            startActivity(intent);
+        } else {
+            Log.w(LOG_TAG, "unhandled click event");
+        }
     }
 
     /* // deprecated way to handle button click based on the 'onClick' XML Button attribute
