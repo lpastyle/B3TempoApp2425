@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.b3tempoapp2425.databinding.ActivityHistoryBinding;
 
@@ -25,5 +26,12 @@ public class HistoryActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Init RV
+        binding.tempoHistoryRv.setHasFixedSize(true);
+        binding.tempoHistoryRv.setLayoutManager(new LinearLayoutManager(this));
+        // RV adapter
+
+
     }
 }
