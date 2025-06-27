@@ -10,10 +10,16 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.b3tempoapp2425.databinding.ActivityHistoryBinding;
+import com.example.b3tempoapp2425.model.TempoDate;
+
+import java.util.ArrayList;
 
 public class HistoryActivity extends AppCompatActivity {
 
     private ActivityHistoryBinding binding;
+
+    // Data model
+    private final ArrayList<TempoDate> tempoCalendar = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +37,8 @@ public class HistoryActivity extends AppCompatActivity {
         binding.tempoHistoryRv.setHasFixedSize(true);
         binding.tempoHistoryRv.setLayoutManager(new LinearLayoutManager(this));
         // RV adapter
-
+        TempoDateAdapter tempoDateAdapter = new TempoDateAdapter(tempoCalendar, this);
+        binding.tempoHistoryRv.setAdapter(tempoDateAdapter);
 
     }
 }
