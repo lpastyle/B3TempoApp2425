@@ -94,6 +94,7 @@
         app:layout_constraintStart_toEndOf="@+id/white_days_tv"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
+    <!--android:onClick="showHistory"-->
     <Button
         android:id="@+id/history_bt"
         android:layout_width="0dp"

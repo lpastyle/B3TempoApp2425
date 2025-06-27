@@ -4,9 +4,11 @@ import static com.example.b3tempoapp2425.TempoColor.BLUE;
 import static com.example.b3tempoapp2425.TempoColor.RED;
 import static com.example.b3tempoapp2425.TempoColor.WHITE;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     void updateNbTempoDaysLeft() {
         Call<TempoDaysLeft> call = edfApi.getTempoDaysLeft(
                 IEdfApi.API_OPTION_PARAM_VALUE,
-                "2025-06-26"
+                Tools.getNowDate()
         );
 
         call.enqueue(new Callback<TempoDaysLeft>() {
@@ -106,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
         // Create call to getTempoHistory
         Call<TempoHistory> call = edfApi.getTempoHistory(
                 IEdfApi.API_OPTION_PARAM_VALUE,
-                "2024-06-27",
-                "2025-06-27",
+                Tools.getLastYearDate(),
+                Tools.getTomorrowDate(),
                 IEdfApi.API_CONSUMER_ID_PARAM_VALUE);
 
         call.enqueue(new Callback<TempoHistory>() {
@@ -159,4 +161,11 @@ public class MainActivity extends AppCompatActivity {
         updateNbTempoDaysLeft();
         updateTempoHistory();
     }
+
+    /* // deprecated way to handle button click based on the 'onClick' XML Button attribute
+    public void showHistory(View view) {
+        Intent intent = new Intent();
+        intent.setClass(this,HistoryActivity.class);
+        startActivity(intent);
+    } */
 }
