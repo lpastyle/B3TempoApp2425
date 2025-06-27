@@ -1,5 +1,7 @@
 package com.example.b3tempoapp2425;
 
+import static com.example.b3tempoapp2425.MainActivity.TEMPO_CALENDAR_EXTRA_KEY;
+
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -39,6 +41,9 @@ public class HistoryActivity extends AppCompatActivity {
         // RV adapter
         TempoDateAdapter tempoDateAdapter = new TempoDateAdapter(tempoCalendar, this);
         binding.tempoHistoryRv.setAdapter(tempoDateAdapter);
+
+        // get tempo calendar data
+        ArrayList<TempoDate> parcelableArrayListExtra = getIntent().getParcelableArrayExtra(TEMPO_CALENDAR_EXTRA_KEY);
 
     }
 }

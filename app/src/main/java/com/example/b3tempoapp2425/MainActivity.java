@@ -33,6 +33,8 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    public static final String TEMPO_CALENDAR_EXTRA_KEY = "tempo_calendar_ek";
+
     private ActivityMainBinding binding;
     private IEdfApi edfApi;
     ArrayList<TempoDate> tempoCalendar = new ArrayList<>();
@@ -170,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.history_bt) {
             Intent intent = new Intent();
             intent.setClass(this, HistoryActivity.class);
+            intent.putExtra(TEMPO_CALENDAR_EXTRA_KEY, tempoCalendar);
             startActivity(intent);
         } else {
             Log.w(LOG_TAG, "unhandled click event");
