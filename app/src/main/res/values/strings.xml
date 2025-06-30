@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">B3TempoApp2425</string>
+    <string name="main_activity_title">Couleurs Tempo</string>
+    <string name="history_activity_title">Historique Tempo</string>
 
     <string name="not_available">NA</string>
     <string name="history_bt">Historique</string>
