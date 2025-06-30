@@ -1,8 +1,11 @@
 package com.example.b3tempoapp2425;
 import com.example.b3tempoapp2425.model.TempoDaysLeft;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 
 public class Tools {
 
@@ -36,6 +39,22 @@ public class Tools {
             return String.valueOf(nbDaysLeft);
         } catch (NumberFormatException e) {
             return "";
+        }
+    }
+
+    /**
+     * Format date sent by EDF API into something more pretty
+     * @param apiDate : the tempo date string as sent by the EDF API
+     * @return a pretty formatted date in the style of "Mon. 19 Dec. 2022"
+     */
+    public  static String formatTempoHistoryDate(String apiDate) {
+        try {
+            String[] ymdArray = apiDate.split("-");
+            Date date = new Date(Integer.parseInt(ymdArray[0])-1900, Integer.parseInt(ymdArray[1])-1, Integer.parseInt(ymdArray[2]));
+            SimpleDateFormat sdf = new SimpleDateFormat("E d MMM yyyy", Locale.FRANCE);
+            return sdf.format(date);
+        } catch (NumberFormatException e) {
+            return "?";
         }
     }
 
