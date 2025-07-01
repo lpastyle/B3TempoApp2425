@@ -5,6 +5,9 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +60,44 @@ public class TempoNotifications {
         // or other notification behaviors after this
         NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
         notificationManager.createNotificationChannels(channels);
+    }
+
+    public static void sendColorNotification(Context context, TempoColor color) {
+        Log.d(LOG_TAG, "sendColorNotification(" + color + ")");
+
+        String notificationChannelId;
+        switch (color) {
+            case RED:
+                notificationChannelId = RED_TEMPO_ALERT_CHANNEL_ID;
+                break;
+            case WHITE:
+                notificationChannelId = WHITE_TEMPO_ALERT_CHANNEL_ID;
+                break;
+            case BLUE:
+                notificationChannelId = BLUE_TEMPO_ALERT_CHANNEL_ID;
+                break;
+            default:
+                Log.w(LOG_TAG,"Today tempo color not yet known");
+                return;
+        }
+
+        // get notification manager
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+        // check if notifications are not blocked
+        if (notificationManager.areNotificationsEnabled()) {
+            // create notification
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context,notificationChannelId)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(context.getString(R.string.tempo_notif_title))
+                    .setContentText(context.getString(R.string.tempo_notif_text,context.getString(color.getStringResId())))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+            // show notification (Id is a unique int for each notification)
+            notificationManager.notify(Tools.getNextNotifId(), builder.build());
+        } else {
+            Log.w(LOG_TAG, "Notifications are blocked");
+        }
 
 
     }

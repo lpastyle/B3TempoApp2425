@@ -6,8 +6,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Tools {
+    // host the notification id generator
+    private static AtomicInteger atomicInteger = null;
+    private static final int INITIAL_GENERATOR_VALUE = 1970;
 
     // To prevent object instantiation
     private Tools() {
@@ -57,6 +61,16 @@ public class Tools {
             return "?";
         }
     }
+
+    public static int getNextNotifId() {
+        if (atomicInteger == null) {
+            atomicInteger = new AtomicInteger(INITIAL_GENERATOR_VALUE);
+            return atomicInteger.get();
+        } else {
+            return atomicInteger.incrementAndGet();
+        }
+    }
+
 
     // Common format method
     private static String formatDate(LocalDate date) {
