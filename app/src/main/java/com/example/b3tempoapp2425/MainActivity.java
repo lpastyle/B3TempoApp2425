@@ -174,9 +174,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (historySize > 1) {
                 binding.todayDcv.setDayCircleColor(tempoCalendar.get(historySize - 2).statut);
                 binding.tomorrowDcv.setDayCircleColor(tempoCalendar.get(historySize - 1).statut);
-                sendColorNotification(this,
+                /*sendColorNotification(this,
                         getPreferences(MODE_PRIVATE),
-                        tempoCalendar.get(historySize - 1).statut);
+                        tempoCalendar.get(historySize - 1).statut);*/
             }
 
         }
