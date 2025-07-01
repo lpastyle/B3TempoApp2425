@@ -26,6 +26,12 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.work.BackoffPolicy;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.example.b3tempoapp2425.databinding.ActivityMainBinding;
 import com.example.b3tempoapp2425.model.TempoDate;
@@ -34,7 +40,9 @@ import com.example.b3tempoapp2425.model.TempoHistory;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,6 +52,7 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static final String TEMPO_CALENDAR_EXTRA_KEY = "tempo_calendar_ek";
+    private static final String TEMPO_WORKER_REQUEST_TAG = "tempo-work-request";
 
     private ActivityMainBinding binding;
     private IEdfApi edfApi;
@@ -66,7 +75,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Init views
         binding.historyBt.setOnClickListener(this);
 
+        // request permission workflow
         check4NotificationPermission();
+
+        // Init work manager
+        initWorkManager();
 
         Retrofit retrofitClient = ApiClient.get();
         if (retrofitClient != null) {
@@ -216,6 +229,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void hideProgressWheel() {
         nbRunningWheels--;
         if (nbRunningWheels < 1) binding.progressWheelPb.setVisibility(GONE);
+    }
+
+    private void initWorkManager() {
+        // compute delay between now and wished work request start
+        Calendar currentTime = Calendar.getInstance();
+        Calendar scheduledTime = Calendar.getInstance();
+
+        scheduledTime.set(Calendar.HOUR_OF_DAY, 12);
+        scheduledTime.set(Calendar.MINUTE, 0);
+        if (scheduledTime.before(currentTime)) {
+            scheduledTime.add(Calendar.DATE, 1);
+        }
+
+        long initialDelay = scheduledTime.getTimeInMillis() - currentTime.getTimeInMillis();
+
+        // only need to be connected to any network
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        // Build work request
+        PeriodicWorkRequest tempoWorkRequest = new PeriodicWorkRequest.Builder(TempoWorker.class,1, TimeUnit.DAYS)
+                .addTag(TEMPO_WORKER_REQUEST_TAG)
+                .setConstraints(constraints)
+                .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
+                .setBackoffCriteria( // wait 10 minutes before retrying)
+                        BackoffPolicy.LINEAR,
+                        30,
+                        TimeUnit.MINUTES
+                )
+                .build();
+
+        Log.d(LOG_TAG, "initial delay=" + initialDelay);
+
+        // enqueue request
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                TEMPO_WORKER_REQUEST_TAG,
+                ExistingPeriodicWorkPolicy.KEEP,
+                tempoWorkRequest);
     }
 
     /*
