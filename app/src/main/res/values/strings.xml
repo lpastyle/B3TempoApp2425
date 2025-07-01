@@ -16,4 +16,16 @@
     <string name="tempo_white_color_text">blanc</string>
     <string name="tempo_blue_color_text">bleu</string>
     <string name="tempo_undecided_color_text">indéterminé</string>
+
+    <!-- text resources for notifications -->
+    <string name="red_channel_name">Jours rouges</string>
+    <string name="red_channel_description">Alertes Tempo pour les jours rouges</string>
+    <string name="white_channel_name">Jours blancs</string>
+    <string name="white_channel_description">Alertes Tempo pour les jours blancs</string>
+    <string name="blue_channel_name">Jours bleus</string>
+    <string name="blue_channel_description">Alertes Tempo pour les jours bleus</string>
+
+    <string name="tempo_notif_title">Alerte Tempo</string>
+    <string name="tempo_notif_text">"Demain jour %s"</string>
+
 </resources>
