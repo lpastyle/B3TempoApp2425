@@ -66,9 +66,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Init views
         binding.historyBt.setOnClickListener(this);
 
-        // Create notification channels
-        TempoNotifications.createNotificationChannels(this);
-
         check4NotificationPermission();
 
         Retrofit retrofitClient = ApiClient.get();
