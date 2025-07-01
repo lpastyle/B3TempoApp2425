@@ -5,6 +5,7 @@ import static android.view.View.VISIBLE;
 import static com.example.b3tempoapp2425.TempoColor.BLUE;
 import static com.example.b3tempoapp2425.TempoColor.RED;
 import static com.example.b3tempoapp2425.TempoColor.WHITE;
+import static com.example.b3tempoapp2425.TempoNotifications.sendColorNotification;
 
 import android.Manifest;
 import android.content.Intent;
@@ -176,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (historySize > 1) {
                 binding.todayDcv.setDayCircleColor(tempoCalendar.get(historySize - 2).statut);
                 binding.tomorrowDcv.setDayCircleColor(tempoCalendar.get(historySize - 1).statut);
+                sendColorNotification(this, tempoCalendar.get(historySize - 1).statut);
             }
 
         }
